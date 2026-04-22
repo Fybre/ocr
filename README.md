@@ -4,7 +4,7 @@ Extract text from computer-generated or handwritten documents, or get descriptio
 
 A self-hosted document OCR service with a web UI, REST API, and folder watcher. Supports Tesseract for machine-printed text and local/cloud LLM vision models for handwriting and complex layouts.
 
-![Web UI](images/screenshot.png)
+![Web UI](screenshots/ocr.png)
 
 ---
 
