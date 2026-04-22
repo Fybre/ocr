@@ -1,0 +1,33 @@
+services:
+  ocr-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ocr-api:latest
+    container_name: ocr-api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: sqlite:////data/ocr.db
+      UPLOAD_DIR: /data/uploads
+      RESULTS_DIR: /data/results
+      WATCH_INPUT_DIR: /data/watch_input
+      WATCH_OUTPUT_DIR: /data/watch_output
+    volumes:
+      - ocr-data:/data
+    restart: unless-stopped
+    # Allow reaching Ollama on the host (Linux)
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  ocr-data:
+    driver: local
